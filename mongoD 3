@@ -1,0 +1,112 @@
+student> db.dropDatabase()
+{ ok: 1, dropped: 'student' }
+student> use admin
+switched to db admin
+admin> use school
+switched to db school
+school> use univ
+switched to db univ
+univ> db.dropDatabase()
+{ ok: 1, dropped: 'univ' }
+univ> use dbms
+switched to db dbms
+dbms> db.createCollection("marklist")
+{ ok: 1 }
+dbms> db.createCollection("parentdetails")
+{ ok: 1 }
+dbms> show collections
+marklist
+parentdetails
+dbms> db.marklist.drop()
+true
+dbms> show collections
+parentdetails
+dbms> db.marklist.insertOne({"rollno":1,"name":"john"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f7fab387de393de28bf205')
+}
+dbms> db.marklist.find()
+[
+  {
+    _id: ObjectId('65f7fab387de393de28bf205'),
+    rollno: 1,
+    name: 'john'
+  }
+]
+dbms> db.marklist.find().pretty()
+[
+  {
+    _id: ObjectId('65f7fab387de393de28bf205'),
+    rollno: 1,
+    name: 'john'
+  }
+]
+dbms> db.marklist.insertOne({"rollno":2,"name":"nandhu"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f7fb9e87de393de28bf206')
+}
+dbms> db.marklist.insertOne({"rollno":3,"name":"hebel"}
+...
+... db.marklist.insertOne({"rollno":3,"name":"hebel"})
+Uncaught:
+SyntaxError: Unexpected token, expected "," (3:0)
+
+  1 | db.marklist.insertOne({"rollno":3,"name":"hebel"}
+  2 |
+> 3 | db.marklist.insertOne({"rollno":3,"name":"hebel"})
+    | ^
+  4 |
+
+dbms> db.marklist.insertOne({"rollno":3,"name":"hebel"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('65f7fbf087de393de28bf207')
+}
+dbms> db.marklist.find().pretty()
+[
+  {
+    _id: ObjectId('65f7fab387de393de28bf205'),
+    rollno: 1,
+    name: 'john'
+  },
+  {
+    _id: ObjectId('65f7fb9e87de393de28bf206'),
+    rollno: 2,
+    name: 'nandhu'
+  },
+  {
+    _id: ObjectId('65f7fbf087de393de28bf207'),
+    rollno: 3,
+    name: 'hebel'
+  }
+]
+dbms> db.marklist.update({"name":"john"},{$set:{"name":"jose"}})
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+dbms> db.marklist.find().pretty()
+[
+  {
+    _id: ObjectId('65f7fab387de393de28bf205'),
+    rollno: 1,
+    name: 'jose'
+  },
+  {
+    _id: ObjectId('65f7fb9e87de393de28bf206'),
+    rollno: 2,
+    name: 'nandhu'
+  },
+  {
+    _id: ObjectId('65f7fbf087de393de28bf207'),
+    rollno: 3,
+    name: 'hebel'
+  }
+]
+dbms>
